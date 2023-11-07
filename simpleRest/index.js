@@ -7,13 +7,16 @@ app.use(express.json());
 
 const flavors = [
   {
-    name: 'Schoko',
+    id: 0,
+    flavor: 'Zitrone',
   },
   {
-    name: 'Vanille',
+    id: 1,
+    flavor: 'Erdbeere',
   },
   {
-    name: 'Zitrone',
+    id: 2,
+    flavor: 'Schoko',
   },
 ];
 
