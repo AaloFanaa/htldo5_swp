@@ -1,10 +1,15 @@
 :root {
   /* color declarations */
-  --bg-color: rgb(50, 50, 50);
+  --main-color: rgb(28, 43, 56);
+  --bg-color: rgb(219, 196, 194);
+  --bg-contrast-color: rgb(214, 225, 235);
+  --secondary-color: rgb(173, 196, 215);
 }
 
 htlm,
 body {
   margin: 0;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  background-color: var(--bg-color);
+  font-size: 10px;
 }

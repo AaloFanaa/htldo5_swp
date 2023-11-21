@@ -4,9 +4,8 @@ import styles from './page.module.css';
 export default function Home() {
   return (
     <main className={styles.main}>
-      <h1>
-        Landing Page <Link href='/about'>About</Link>
-      </h1>
+      <h1>Main Page</h1>
+      <Link href='/login'>Go to login</Link>
     </main>
   );
 }

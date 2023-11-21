@@ -1,5 +1,12 @@
-import styles from './page.module.css';
+import styles from './login.module.css';
+import LoginLayout from '../layoutLogin';
 
 export default function Login() {
-  return <div>Login in to use the App</div>;
+  return (
+    <LoginLayout>
+      <div>
+        <div>Login</div>
+      </div>
+    </LoginLayout>
+  );
 }
