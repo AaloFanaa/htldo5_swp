@@ -4,6 +4,7 @@ import './globals.css';
 import Header from './header';
 
 const inter = Inter({ subsets: ['latin'] });
+// const { data: session } = useSession();
 
 export const metadata: Metadata = {
   title: 'ScreenTale',
