@@ -1,18 +1,18 @@
 import Link from 'next/link';
 import styles from './page.module.css';
-import { SessionProvider } from 'next-auth/react';
+import Header from './header';
+import { useSession } from 'next-auth/react';
 
-export default function App({
-  pageProps: { session, ...pageProps },
-}: {
-  pageProps: any;
-}) {
+export default async function App() {
+  const { data: session } = useSession();
+
   return (
-    <SessionProvider session={pageProps.session}>
-      <div className={styles.main}>
+    <>
+      <Header></Header>
+      <div className={styles.wrapper}>
         <h1>Main Page</h1>
         <Link href='/login'>Go to login</Link>
       </div>
-    </SessionProvider>
+    </>
   );
 }
