@@ -16,3 +16,11 @@
   z-index: -1;
   box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 70%);
 }
+
+.headerUser {
+  padding: 0 50px;
+}
+
+.headerLogout {
+  padding: 0 50px;
+}
