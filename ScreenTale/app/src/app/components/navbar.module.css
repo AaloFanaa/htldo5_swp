@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 3rem;
+  height: 4rem;
   position: relative;
   font-size: 1rem;
 }
@@ -18,9 +18,19 @@
 }
 
 .navbarUser {
-  padding: 0 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
 }
 
-.navbarLogout {
-  padding: 0 50px;
+.userName {
+}
+
+.userImage {
+  margin: 0 1rem;
+  height: 3rem;
+  border: 1px solid black;
+  border-radius: 5rem;
+  aspect-ratio: 1;
 }
