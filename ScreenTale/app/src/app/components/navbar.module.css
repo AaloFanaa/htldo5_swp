@@ -40,6 +40,24 @@
   border-radius: 5rem;
 }
 
+.userDropdown {
+  display: none;
+  position: absolute;
+  background-color: var(--main-contrast-color);
+  top: 100%;
+  right: 0;
+  z-index: 10;
+  min-width: 7rem;
+}
+
+.userDropdown > a {
+  border: 1px solid red;
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  text-align: right;
+}
+
 .navbarMenu {
   width: 10rem;
   display: flex;
@@ -50,4 +68,8 @@
 .iconImage {
   height: 2rem;
   width: 2rem;
+}
+
+.show {
+  display: block !important;
 }

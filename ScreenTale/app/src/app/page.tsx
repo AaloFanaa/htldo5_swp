@@ -31,7 +31,7 @@ export default async function App() {
       <div className={styles.wrapper}>
         <button onClick={openModal}>Open Modal</button>
       </div>
-      <ModalDialog isOpen={modalIsOpen} onClose={closeModal} customStyles={}>
+      <ModalDialog isOpen={modalIsOpen} onClose={closeModal} customStyles={modalStyles}>
         <h2>Modal Content</h2>
         <p>This is the content of the modal.</p>
       </ModalDialog>
