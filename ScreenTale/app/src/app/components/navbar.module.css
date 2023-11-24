@@ -15,6 +15,7 @@
   bottom: 1px;
   z-index: -1;
   box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 70%);
+  display: inline-block;
 }
 
 .navbarUser {
@@ -36,40 +37,86 @@
 .userImage {
   height: 2.5rem;
   width: 2.5rem;
-  border: 1px solid black;
+  border: 1px solid var(--text-color);
   border-radius: 5rem;
 }
 
 .userDropdown {
   display: none;
   position: absolute;
-  background-color: var(--main-contrast-color);
+  background-color: var(--bg-contrast-color) !important;
   top: 100%;
-  right: 0;
+  right: 1rem;
   z-index: 10;
   min-width: 7rem;
 }
 
-.userDropdown > a {
-  border: 1px solid red;
+.dropDownLink {
   width: 100%;
+  height: 3rem;
   display: block;
-  text-decoration: none;
   text-align: right;
-}
-
-.navbarMenu {
-  width: 10rem;
+  border-bottom: 1px solid var(--main-color);
+  background-color: var(--bg-contrast-color);
+  z-index: 100;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   align-items: center;
 }
 
-.iconImage {
-  height: 2rem;
-  width: 2rem;
+.userDropdown a {
+  text-decoration: none;
+  padding: 0 1rem;
+  color: var(--text-color);
+  width: 100%;
+  height: 100%;
+  line-height: 3rem;
+  cursor: pointer;
 }
 
-.show {
-  display: block !important;
+.userDropdown a:hover {
+  background-color: var(--secondary-color);
+}
+
+.userDropdown:last-child {
+  border: none;
+}
+
+.navbarMenu {
+  width: 12rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.menuIcon {
+  height: 4rem;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.menuIcon::after {
+  content: '';
+  width: 99%;
+  height: 80%;
+  position: absolute;
+  border-right: 1px solid var(--text-color);
+}
+
+.menuIcon:last-child::after {
+  border: none;
+}
+
+.menuIcon:hover {
+  background-color: var(--bg-contrast-color);
+}
+
+.iconImage {
+  height: 2.5rem;
+  aspect-ratio: 1;
 }
