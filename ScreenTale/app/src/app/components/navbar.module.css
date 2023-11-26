@@ -1,5 +1,6 @@
 .navbarWrapper {
-  background-color: var(--bg-color);
+  /* background-color: var(--bg-color); */
+  background-color: var(--main-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,7 +31,7 @@
 }
 
 .navbarUser:hover {
-  background-color: var(--bg-contrast-color);
+  background-color: var(--secondary-color);
   cursor: pointer;
 }
 
@@ -44,7 +45,7 @@
 .userDropdown {
   display: none;
   position: absolute;
-  background-color: var(--bg-contrast-color) !important;
+  background-color: var(--secondary-color) !important;
   top: 100%;
   right: 1rem;
   z-index: 10;
@@ -56,8 +57,8 @@
   height: 3rem;
   display: block;
   text-align: right;
-  border-bottom: 1px solid var(--main-color);
-  background-color: var(--bg-contrast-color);
+  border-bottom: 1px solid var(--text-color);
+  background-color: var(--secondary-color);
   z-index: 100;
   display: flex;
   justify-content: flex-end;
@@ -75,7 +76,7 @@
 }
 
 .userDropdown a:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--secondary-highlight-color);
 }
 
 .userDropdown:last-child {
@@ -97,6 +98,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: 0.3s all;
   position: relative;
 }
 
@@ -113,7 +115,7 @@
 }
 
 .menuIcon:hover {
-  background-color: var(--bg-contrast-color);
+  background-color: var(--secondary-color);
 }
 
 .iconImage {

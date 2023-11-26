@@ -45,31 +45,35 @@ export default function navbar() {
             <Image priority src={userIcon} alt='User image' className={styles.userImage} />
           )}
         </div>
-        <div
-          onMouseEnter={() => {
-            document.getElementById('dropDownMenu')!.style.display = 'block';
-          }}
-          onMouseLeave={() => {
-            document.getElementById('dropDownMenu')!.style.display = 'none';
-          }}
-          id='dropDownMenu'
-          className={styles.userDropdown}>
-          <div className={styles.dropDownLink}>
-            <Link href={'/'}>My profile</Link>
-          </div>
+        {session.data?.user?.name ? (
+          <div
+            onMouseEnter={() => {
+              document.getElementById('dropDownMenu')!.style.display = 'block';
+            }}
+            onMouseLeave={() => {
+              document.getElementById('dropDownMenu')!.style.display = 'none';
+            }}
+            id='dropDownMenu'
+            className={styles.userDropdown}>
+            <div className={styles.dropDownLink}>
+              <Link href={'/'}>My profile</Link>
+            </div>
 
-          <div className={styles.dropDownLink}>
-            <Link href={'/'}>Settings</Link>
+            <div className={styles.dropDownLink}>
+              <Link href={'/'}>Settings</Link>
+            </div>
+            <div className={styles.dropDownLink}>
+              <a
+                onClick={() => {
+                  signOut();
+                }}>
+                Logout
+              </a>
+            </div>
           </div>
-          <div className={styles.dropDownLink}>
-            <a
-              onClick={() => {
-                signOut();
-              }}>
-              Logout
-            </a>
-          </div>
-        </div>
+        ) : (
+          ''
+        )}
       </div>
     </AuthProvider>
   );
