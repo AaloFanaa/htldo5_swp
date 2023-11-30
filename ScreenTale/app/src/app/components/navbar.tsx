@@ -12,11 +12,13 @@ import movieIcon from '../../../public/movie-icon.svg';
 import bookmarkIcon from '../../../public/bookmark-icon.svg';
 import bookIcon from '../../../public/book-icon.svg';
 import houseIcon from '../../../public/house-icon.svg';
+import { redirect } from 'next/navigation';
 
 type navbarPageType = {
   name: string;
   icon: any;
   activeNumber: number;
+  linkTo: string;
 };
 
 export default function navbar() {
@@ -28,21 +30,25 @@ export default function navbar() {
       name: 'Home',
       icon: houseIcon,
       activeNumber: 0,
+      linkTo: '/',
     },
     {
       name: 'Books',
       icon: bookIcon,
       activeNumber: 1,
+      linkTo: '/books',
     },
     {
       name: 'Movie',
       icon: movieIcon,
       activeNumber: 2,
+      linkTo: '/movies',
     },
     {
       name: 'Library',
       icon: bookmarkIcon,
       activeNumber: 3,
+      linkTo: '/library',
     },
   ];
 
@@ -52,7 +58,12 @@ export default function navbar() {
         <div className={styles.navbarMenu}>
           {navbarPages.map((page: navbarPageType) => {
             return (
-              <div className={page.activeNumber === activePage ? styles.menuIconActive : styles.menuIcon}>
+              <div
+                onClick={() => {
+                  console.log('Clicked: ', page.linkTo);
+                  redirect(page.linkTo);
+                }}
+                className={page.activeNumber === activePage ? styles.menuIconActive : styles.menuIcon}>
                 <Image src={page.icon} alt={page.name} className={styles.iconImage} />
               </div>
             );
