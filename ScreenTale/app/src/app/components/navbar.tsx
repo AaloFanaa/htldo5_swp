@@ -4,29 +4,59 @@ import AuthProvider from '../context/authProvider';
 import styles from './navbar.module.css';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
+import { useActivePage } from '../context/navbarProvider';
 
 import Image from 'next/image';
 import userIcon from '../../../public/user-icon.svg';
 import movieIcon from '../../../public/movie-icon.svg';
 import bookmarkIcon from '../../../public/bookmark-icon.svg';
 import bookIcon from '../../../public/book-icon.svg';
+import houseIcon from '../../../public/house-icon.svg';
+
+type navbarPageType = {
+  name: string;
+  icon: any;
+  activeNumber: number;
+};
 
 export default function navbar() {
   const session = useSession();
+  const { activePage } = useActivePage();
+
+  const navbarPages: Array<navbarPageType> = [
+    {
+      name: 'Home',
+      icon: houseIcon,
+      activeNumber: 0,
+    },
+    {
+      name: 'Books',
+      icon: bookIcon,
+      activeNumber: 1,
+    },
+    {
+      name: 'Movie',
+      icon: movieIcon,
+      activeNumber: 2,
+    },
+    {
+      name: 'Library',
+      icon: bookmarkIcon,
+      activeNumber: 3,
+    },
+  ];
 
   return (
     <AuthProvider>
       <div className={styles.navbarWrapper}>
         <div className={styles.navbarMenu}>
-          <div className={styles.menuIcon}>
-            <Image src={bookIcon} alt='Books' className={styles.iconImage} />
-          </div>
-          <div className={styles.menuIcon}>
-            <Image src={movieIcon} alt='Books' className={styles.iconImage} />
-          </div>
-          <div className={styles.menuIcon}>
-            <Image src={bookmarkIcon} alt='Books' className={styles.iconImage} />
-          </div>
+          {navbarPages.map((page: navbarPageType) => {
+            return (
+              <div className={page.activeNumber === activePage ? styles.menuIconActive : styles.menuIcon}>
+                <Image src={page.icon} alt={page.name} className={styles.iconImage} />
+              </div>
+            );
+          })}
         </div>
         <div
           className={styles.navbarUser}

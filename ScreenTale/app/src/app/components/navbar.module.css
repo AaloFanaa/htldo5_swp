@@ -84,7 +84,7 @@
 }
 
 .navbarMenu {
-  width: 12rem;
+  min-width: 12rem;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -102,23 +102,27 @@
   position: relative;
 }
 
-.menuIcon::after {
-  content: '';
-  width: 99%;
-  height: 80%;
-  position: absolute;
-  border-right: 1px solid var(--text-color);
-}
-
-.menuIcon:last-child::after {
-  border: none;
-}
-
 .menuIcon:hover {
   background-color: var(--secondary-color);
 }
 
+.menuIconActive {
+  height: 4rem;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s all;
+  position: relative;
+  background-color: var(--secondary-color);
+}
+
+.menuIconActive:hover {
+  background-color: var(--secondary-highlight-color);
+}
+
 .iconImage {
-  height: 2.5rem;
+  height: 1.8rem;
   aspect-ratio: 1;
 }
