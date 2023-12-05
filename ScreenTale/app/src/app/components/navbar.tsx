@@ -23,7 +23,7 @@ type navbarPageType = {
 
 export default function navbar() {
   const session = useSession();
-  const { activePage } = useActivePage();
+  const { activePage, setActivePage } = useActivePage();
 
   const navbarPages: Array<navbarPageType> = [
     {
@@ -58,14 +58,14 @@ export default function navbar() {
         <div className={styles.navbarMenu}>
           {navbarPages.map((page: navbarPageType) => {
             return (
-              <div
+              <Link
+                href={page.linkTo}
                 onClick={() => {
-                  console.log('Clicked: ', page.linkTo);
-                  redirect(page.linkTo);
+                  setActivePage(page.activeNumber);
                 }}
                 className={page.activeNumber === activePage ? styles.menuIconActive : styles.menuIcon}>
                 <Image src={page.icon} alt={page.name} className={styles.iconImage} />
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -97,11 +97,23 @@ export default function navbar() {
             id='dropDownMenu'
             className={styles.userDropdown}>
             <div className={styles.dropDownLink}>
-              <Link href={'/'}>My profile</Link>
+              <Link
+                onClick={() => {
+                  setActivePage(null);
+                }}
+                href={'/profile'}>
+                My profile
+              </Link>
             </div>
 
             <div className={styles.dropDownLink}>
-              <Link href={'/'}>Settings</Link>
+              <Link
+                onClick={() => {
+                  setActivePage(null);
+                }}
+                href={'/settings'}>
+                Settings
+              </Link>
             </div>
             <div className={styles.dropDownLink}>
               <a

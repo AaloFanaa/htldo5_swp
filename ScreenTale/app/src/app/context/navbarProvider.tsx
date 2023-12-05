@@ -3,14 +3,14 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type ActivePageContextType = {
-  activePage: number;
-  setActivePage: (page: number) => void;
+  activePage: number | null;
+  setActivePage: (page: number | null) => void;
 };
 
 const ActivePageContext = createContext<ActivePageContextType | undefined>(undefined);
 
 export const ActivePageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [activePage, setActivePage] = useState<number>(0);
+  const [activePage, setActivePage] = useState<number | null>(0);
 
   return <ActivePageContext.Provider value={{ activePage, setActivePage }}>{children}</ActivePageContext.Provider>;
 };

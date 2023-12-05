@@ -33,10 +33,7 @@ export const options: NextAuthOptions = {
         // Docs: https://next-auth.js.org/configuration/providers/credentials
         const user = { id: '42', name: 'admin', password: '12345' };
 
-        if (
-          credentials?.username === user.name &&
-          credentials?.password === user.password
-        ) {
+        if (credentials?.username === user.name && credentials?.password === user.password) {
           return user;
         } else {
           return null;
