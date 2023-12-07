@@ -1,6 +1,7 @@
 :root {
   /* color declarations */
-  --text-color: rgb(0, 0, 0);
+  --text-color: rgb(255, 255, 255);
+  --text-contrast-color: rgb(0, 0, 0);
 
   /* Nature Pink */
   /* --main-color: rgb(255, 197, 197);
@@ -38,5 +39,6 @@ body {
   margin: 0;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   background-color: var(--bg-color);
+  color: var(--text-color);
   font-size: 10px;
 }

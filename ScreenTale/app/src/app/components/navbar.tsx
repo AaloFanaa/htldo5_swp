@@ -59,6 +59,7 @@ export default function navbar() {
           {navbarPages.map((page: navbarPageType) => {
             return (
               <Link
+                key={page.activeNumber}
                 href={page.linkTo}
                 onClick={() => {
                   setActivePage(page.activeNumber);
@@ -72,11 +73,9 @@ export default function navbar() {
         <div
           className={styles.navbarUser}
           onMouseEnter={() => {
-            console.log(document.getElementById('dropDownMenu'));
             document.getElementById('dropDownMenu')!.style.display = 'block';
           }}
           onMouseLeave={() => {
-            console.log(document.getElementById('dropDownMenu'));
             document.getElementById('dropDownMenu')!.style.display = 'none';
           }}>
           <div className={styles.userName}>{session.data ? session.data?.user?.name : 'Loading...'}</div>
