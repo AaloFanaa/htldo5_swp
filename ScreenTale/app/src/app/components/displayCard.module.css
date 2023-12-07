@@ -1,0 +1,12 @@
+.wrapper {
+  height: 17rem;
+  min-width: 12rem;
+  margin: 1rem;
+  background-color: var(--bg-highlight-color);
+  transition: 0.3s all;
+  padding: 1rem;
+}
+
+.wrapper:hover {
+  transform: scale(1.02);
+}

@@ -25,33 +25,6 @@ export default function navbar() {
   const session = useSession();
   const { activePage, setActivePage } = useActivePage();
 
-  const navbarPages: Array<navbarPageType> = [
-    {
-      name: 'Home',
-      icon: houseIcon,
-      activeNumber: 0,
-      linkTo: '/',
-    },
-    {
-      name: 'Books',
-      icon: bookIcon,
-      activeNumber: 1,
-      linkTo: '/books',
-    },
-    {
-      name: 'Movie',
-      icon: movieIcon,
-      activeNumber: 2,
-      linkTo: '/movies',
-    },
-    {
-      name: 'Library',
-      icon: bookmarkIcon,
-      activeNumber: 3,
-      linkTo: '/library',
-    },
-  ];
-
   return (
     <AuthProvider>
       <div className={styles.navbarWrapper}>
@@ -130,3 +103,30 @@ export default function navbar() {
     </AuthProvider>
   );
 }
+
+const navbarPages: Array<navbarPageType> = [
+  {
+    name: 'Home',
+    icon: houseIcon,
+    activeNumber: 0,
+    linkTo: '/',
+  },
+  {
+    name: 'Books',
+    icon: bookIcon,
+    activeNumber: 1,
+    linkTo: '/books',
+  },
+  {
+    name: 'Movie',
+    icon: movieIcon,
+    activeNumber: 2,
+    linkTo: '/movies',
+  },
+  {
+    name: 'Library',
+    icon: bookmarkIcon,
+    activeNumber: 3,
+    linkTo: '/library',
+  },
+];
