@@ -1,0 +1,43 @@
+.wrapper {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.searchWrapper {
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchBarWrapper {
+  width: 60%;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchBarLabel {
+  width: 5%;
+  height: 100%;
+}
+
+.searchBarLabelIcon {
+  height: 3rem !important;
+  aspect-ratio: 1 !important;
+  fill: white;
+}
+
+.searchBarText {
+  width: 95%;
+  height: 3rem;
+  margin: none;
+  outline: none;
+}
+
+.resultsWrapper {
+}

@@ -12,7 +12,6 @@ import movieIcon from '../../../public/movie-icon.svg';
 import bookmarkIcon from '../../../public/bookmark-icon.svg';
 import bookIcon from '../../../public/book-icon.svg';
 import houseIcon from '../../../public/house-icon.svg';
-import { redirect } from 'next/navigation';
 
 type navbarPageType = {
   name: string;
