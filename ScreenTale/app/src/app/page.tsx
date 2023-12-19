@@ -6,8 +6,8 @@ import { useActivePage } from './context/navbarProvider';
 import { Gentium_Book_Plus } from 'next/font/google';
 import DisplayCard from './components/displayCard';
 
-// const bestsellerUrl = 'https://api.nytimes.com/svc/books/v3/lists.json?list=hardcover-fiction&api-key=qkQgmC5hGtFlpt5A9BvWA09S2zAu6SUE';
-const bestsellerUrl = 'AAAAA';
+const bestsellerUrl = 'https://api.nytimes.com/svc/books/v3/lists.json?list=hardcover-fiction&api-key=qkQgmC5hGtFlpt5A9BvWA09S2zAu6SUE';
+//const bestsellerUrl = 'AAAAA';
 
 export default function App() {
   const { activePage, setActivePage } = useActivePage();
