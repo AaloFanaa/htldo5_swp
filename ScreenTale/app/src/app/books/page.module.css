@@ -19,10 +19,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: var(--main-color);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .searchBarLabel {
-  width: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
   height: 100%;
 }
 
@@ -30,14 +36,22 @@
   height: 3rem !important;
   aspect-ratio: 1 !important;
   fill: white;
+  user-select: none;
 }
 
 .searchBarText {
-  width: 95%;
+  width: 90%;
   height: 3rem;
   margin: none;
   outline: none;
+  background-color: transparent;
+  border: none;
+  font-size: 1.2rem;
 }
 
 .resultsWrapper {
+}
+
+.searchBarText::placeholder {
+  color: var(--bg-highlight-color);
 }

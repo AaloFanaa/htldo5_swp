@@ -20,9 +20,19 @@ const bookOverview: FC<bookOverviewProps> = () => {
       <div className={styles.searchWrapper}>
         <div className={styles.searchBarWrapper}>
           <div className={styles.searchBarLabel}>
-            <Image src={searchIcon} alt='Search' className={styles.searchBarLabelIcon} />
+            <Image
+              src={searchIcon}
+              alt='Search'
+              className={styles.searchBarLabelIcon}
+              width={30}
+              height={30}
+            />
           </div>
-          <input className={styles.searchBarText} type='text' />
+          <input
+            className={styles.searchBarText}
+            type='text'
+            placeholder='Gib hier deinen Suchtext ein'
+          />
         </div>
       </div>
       <div className={styles.resultsWrapper}></div>
