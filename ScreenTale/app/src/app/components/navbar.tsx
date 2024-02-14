@@ -72,7 +72,7 @@ export default function navbar() {
                 onClick={() => {
                   setActivePage(null);
                 }}
-                href={'/profile'}>
+                href={'/library'}>
                 My profile
               </Link>
             </div>

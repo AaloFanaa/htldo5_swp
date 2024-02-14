@@ -15,7 +15,6 @@ type Book = {
   title: string;
   image: string | null;
   author: string | null;
-  isbn: string | null;
   link: string;
 };
 
@@ -54,7 +53,6 @@ const bookOverview: FC<bookOverviewProps> = () => {
           result.items.forEach((res: any, i: number) => {
             let newBook: Book = {
               title: res.volumeInfo.title,
-              isbn: res.volumeInfo.industryIdentifiers ? res.volumeInfo.industryIdentifiers[0].identifier : null,
               image: res.volumeInfo.imageLinks ? res.volumeInfo.imageLinks.thumbnail : null,
               author: res.volumeInfo.authors ? res.volumeInfo.authors[0] : null,
               link: res.selfLink,
@@ -90,7 +88,7 @@ const bookOverview: FC<bookOverviewProps> = () => {
         </div>
       </div>
       <div className={styles.resultsWrapper}>
-        {/* <DisplayCard displayName='Test' author='Bernhard' image={null}></DisplayCard> */}
+        {/* <DisplayCard displayName='Test' author='Bernhard' image={null} link='Wasser'></DisplayCard> */}
         {bookArray.length >= 1 ? (
           bookArray.map((book, i) => {
             return <DisplayCard displayName={book.title} author={book.author} image={book.image!} key={'Book-' + i} link={book.link}></DisplayCard>;

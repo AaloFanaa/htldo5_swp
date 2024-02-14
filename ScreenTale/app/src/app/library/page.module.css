@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.header {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
