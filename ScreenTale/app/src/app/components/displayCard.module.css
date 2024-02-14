@@ -1,4 +1,8 @@
 .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: top;
+  flex-direction: column;
   height: 17rem;
   min-width: 12rem;
   margin: 1rem;
@@ -9,4 +13,13 @@
 
 .wrapper:hover {
   transform: scale(1.02);
+  cursor: pointer;
+}
+
+.name {
+  font-size: 1.2rem;
+}
+
+.author {
+  font-size: 1rem;
 }

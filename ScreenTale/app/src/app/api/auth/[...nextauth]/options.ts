@@ -41,4 +41,11 @@ export const options: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token, user }) {
+      //@ts-expect-error
+      session.user.id = token.sub;
+      return session;
+    },
+  },
 };

@@ -42,13 +42,7 @@ export default function App() {
       }}>
       <div className={styles.wrapperBooks}>
         {bookArray?.map((book) => {
-          return (
-            <DisplayCard
-              displayName={book.book_details[0].title}
-              isbn={book.isbns[0].isbn13}
-              author={book.book_details[0].author}
-              image={null}></DisplayCard>
-          );
+          return <DisplayCard displayName={book.book_details[0].title} author={book.book_details[0].author} image={null}></DisplayCard>;
         })}
       </div>
     </div>
