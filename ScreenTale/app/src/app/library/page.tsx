@@ -52,7 +52,6 @@ const library: FC<libraryProps> = () => {
         if (result.totalItems == 0) {
           return;
         }
-        console.log(result);
         let newEntry: Entry = {
           title: result.volumeInfo.title,
           image: result.volumeInfo.imageLinks ? result.volumeInfo.imageLinks.thumbnail : null,
