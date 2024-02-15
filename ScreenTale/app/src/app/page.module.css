@@ -1,13 +1,15 @@
 .wrapper {
   width: 100%;
-  height: calc(100vh - 4rem);
+  /* height: calc(100vh - 4rem); */
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .wrapperBooks {
-  height: 20.5rem;
+  /* height: 20.5rem; */
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  overflow-x: auto;
-  white-space: nowrap;
+  /* justify-content: space-evenly; */
+  /* align-items: center; */
+  /* overflow-x: auto; */
+  white-space: wrap;
 }

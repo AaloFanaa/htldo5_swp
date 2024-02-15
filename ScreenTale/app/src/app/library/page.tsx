@@ -6,6 +6,7 @@ import { firestore } from '../page';
 import { collection, getDocs } from 'firebase/firestore';
 import styles from './page.module.css';
 import DisplayCard from '../components/displayCard';
+import { useSession } from 'next-auth/react';
 
 interface libraryProps {}
 
@@ -20,27 +21,35 @@ const library: FC<libraryProps> = () => {
   const { activePage, setActivePage } = useActivePage();
   const [entryArray, setEntryArray] = useState<Array<Entry>>([]);
 
+  const sessionData = useSession();
+
   useEffect(() => {
     setActivePage(3); //Make sure the right page gets selected
     fetchUserData();
+    console.log(sessionData);
   }, []);
 
   //Fetching user Data
   const fetchUserData = async () => {
     setEntryArray([]);
     console.log('Fetching...');
-    //Fetching the save entries
+
+    //Fetching the saved entries
+    //@ts-expect-error
+    let userId = await sessionData.data?.user.id;
     let userData;
     try {
       const querySnapshot = await getDocs(collection(firestore, 'user-libraries'));
       querySnapshot.forEach((doc) => {
-        userData = doc.data();
+        if (doc.id == userId) {
+          userData = doc.data();
+        }
       });
     } catch (e) {
       console.error('Error reading user: ', e);
       return;
     }
-
+    console.log(userData);
     //Getting data of the fetched entries
     Object.values(userData!).forEach(async (entry: any) => {
       try {

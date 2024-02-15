@@ -15,7 +15,6 @@ interface displayCardProps {
 
 const displayCard: FC<displayCardProps> = (props) => {
   const sessionData = useSession();
-  console.log(sessionData);
   const addToLibrary = async (name: string, link: string) => {
     //@ts-expect-error
     const userRef = doc(firestore, 'user-libraries', sessionData.data?.user?.id);
