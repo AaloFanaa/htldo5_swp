@@ -1,16 +1,62 @@
+/* Stildefinitionen für die Komponente 'library' */
+
 .wrapper {
-  display: flex;
-  flex-flow: column;
-  justify-content: flex-start;
-  align-items: center;
+  font-family: 'Arial', sans-serif;
+  background-color: var(--bg-color);
+  color: #fff;
+  padding: 20px;
 }
 
 .header {
   font-size: 2rem;
   font-weight: bold;
+  text-align: center;
+  padding: 20px 0;
+  background-color: var(--main-color);
 }
 
 .contentWrapper {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+/* Stildefinitionen für die DisplayCard-Komponente */
+
+.display-card {
+  width: 200px;
+  margin: 15px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--secondary-color);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.display-card:hover {
+  transform: scale(1.05);
+}
+
+.card-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.card-info {
+  padding: 10px;
+}
+
+.card-link {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  background-color: var(--secondary-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.card-link:hover {
+  background-color: var(--secondary-highlight-color);
 }

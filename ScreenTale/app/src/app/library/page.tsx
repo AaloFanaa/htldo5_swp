@@ -39,7 +39,9 @@ const library: FC<libraryProps> = () => {
     let userId = await sessionData.data?.user.id;
     let userData;
     try {
-      const querySnapshot = await getDocs(collection(firestore, 'user-libraries'));
+      const querySnapshot = await getDocs(
+        collection(firestore, 'user-libraries')
+      );
       querySnapshot.forEach((doc) => {
         if (doc.id == userId) {
           userData = doc.data();
@@ -63,8 +65,12 @@ const library: FC<libraryProps> = () => {
         }
         let newEntry: Entry = {
           title: result.volumeInfo.title,
-          image: result.volumeInfo.imageLinks ? result.volumeInfo.imageLinks.thumbnail : null,
-          author: result.volumeInfo.authors ? result.volumeInfo.authors[0] : null,
+          image: result.volumeInfo.imageLinks
+            ? result.volumeInfo.imageLinks.thumbnail
+            : null,
+          author: result.volumeInfo.authors
+            ? result.volumeInfo.authors[0]
+            : null,
           link: result.selfLink,
         };
         setEntryArray((entryArray) => [...entryArray, newEntry]);
@@ -82,7 +88,12 @@ const library: FC<libraryProps> = () => {
         {entryArray.length >= 1 ? (
           entryArray.map((entry, i) => {
             return (
-              <DisplayCard displayName={entry.title} author={entry.author} image={entry.image!} key={'Book-' + i} link={entry.link}></DisplayCard>
+              <DisplayCard
+                displayName={entry.title}
+                author={entry.author}
+                image={entry.image!}
+                key={'Book-' + i}
+                link={entry.link}></DisplayCard>
             );
           })
         ) : (
