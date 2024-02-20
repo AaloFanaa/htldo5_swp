@@ -36,7 +36,6 @@ const bookOverview: FC<bookOverviewProps> = () => {
   };
   const handleSearchEnter: (event: KeyboardEvent<HTMLInputElement>) => void = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      console.log('Clearing books...');
       setBookArray([]);
       console.log('Searching for: ' + searchString);
       const fetchData = async () => {
