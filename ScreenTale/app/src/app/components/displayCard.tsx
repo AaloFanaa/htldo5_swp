@@ -4,17 +4,12 @@ import Image from 'next/image';
 import placeholderImage from '../../../public/bookPlaceholder.png';
 import { useSession } from 'next-auth/react';
 import { firestore } from '../page';
-import {
-  doc,
-  setDoc,
-  deleteDoc,
-  updateDoc,
-  deleteField,
-} from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, updateDoc, deleteField } from 'firebase/firestore';
+import { User } from 'next-auth';
 
 interface displayCardProps {
   displayName: string;
-  author: string | null;
+  info: string | null;
   image: string | null;
   link: string;
   showDelButton: boolean;
@@ -24,19 +19,16 @@ interface displayCardProps {
 
 const DisplayCard: FC<displayCardProps> = (props) => {
   const sessionData = useSession();
+  let user: User & { id: string };
+  const getUser = async () => {
+    //@ts-expect-error
+    user = await sessionData.data?.user;
+  };
 
   const addToLibrary = async (name: string, link: string) => {
-    const userRef = doc(
-      firestore,
-      'user-libraries',
-      sessionData.data?.user?.id
-    );
+    const userRef = doc(firestore, 'user-libraries', user.id);
     try {
-      await setDoc(
-        userRef,
-        { [props.displayName]: props.link },
-        { merge: true }
-      );
+      await setDoc(userRef, { [props.displayName]: props.link }, { merge: true });
       alert('Successfully added entry to the library!');
     } catch (error) {
       console.log('Could not add to library:', error);
@@ -45,11 +37,7 @@ const DisplayCard: FC<displayCardProps> = (props) => {
   };
 
   const deleteFromLibrary = async (name: string) => {
-    const userRef = doc(
-      firestore,
-      'user-libraries',
-      sessionData.data?.user?.id
-    );
+    const userRef = doc(firestore, 'user-libraries', user.id);
     try {
       await updateDoc(userRef, { [props.displayName]: deleteField() });
       alert('Successfully removed entry from the library!');
@@ -66,21 +54,14 @@ const DisplayCard: FC<displayCardProps> = (props) => {
         {props.image ? (
           <Image src={props.image} alt='Thumbnail' width='180' height='230' />
         ) : (
-          <Image
-            src={placeholderImage}
-            alt='Placeholder'
-            width='180'
-            height='230'
-          />
+          <Image src={placeholderImage} alt='Placeholder' width='180' height='230' />
         )}
       </div>
       <div className={styles.name}>{props.displayName}</div>
-      <div className={styles.author}>{props.author}</div>
+      <div className={styles.author}>{props.info}</div>
       <div className={styles.buttonsWrapper}>
         {props.showAddButton ? (
-          <div
-            className={styles.addButton}
-            onClick={() => addToLibrary(props.displayName, props.link)}>
+          <div className={styles.addButton} onClick={() => addToLibrary(props.displayName, props.link)}>
             Add to library
           </div>
         ) : (
@@ -88,9 +69,7 @@ const DisplayCard: FC<displayCardProps> = (props) => {
         )}
 
         {props.showDelButton ? (
-          <div
-            className={styles.deleteButton}
-            onClick={() => deleteFromLibrary(props.displayName)}>
+          <div className={styles.deleteButton} onClick={() => deleteFromLibrary(props.displayName)}>
             Delete from library
           </div>
         ) : (
