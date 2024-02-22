@@ -88,6 +88,11 @@ const Library: FC<libraryProps> = () => {
     console.log(entryArray);
   };
 
+  const handleDelete = async () => {
+    // Aktualisiere die Benutzeroberfläche nach dem Löschen
+    await fetchUserData();
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>Your library</div>
@@ -102,7 +107,10 @@ const Library: FC<libraryProps> = () => {
                 key={'Book-' + i}
                 link={entry.link}
                 showDelButton={true}
-                showAddButton={false}></DisplayCard>
+                showAddButton={false}
+                onDelete={() => {
+                  handleDelete();
+                }}></DisplayCard>
             );
           })
         ) : (

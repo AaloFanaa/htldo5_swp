@@ -19,6 +19,7 @@ interface displayCardProps {
   link: string;
   showDelButton: boolean;
   showAddButton: boolean;
+  onDelete: () => Promise<void>;
 }
 
 const DisplayCard: FC<displayCardProps> = (props) => {
@@ -52,6 +53,7 @@ const DisplayCard: FC<displayCardProps> = (props) => {
     try {
       await updateDoc(userRef, { [props.displayName]: deleteField() });
       alert('Successfully removed entry from the library!');
+      props.onDelete();
     } catch (error) {
       console.log('Could not remove from library:', error);
       alert('A problem occurred while removing an entry from the library!');
