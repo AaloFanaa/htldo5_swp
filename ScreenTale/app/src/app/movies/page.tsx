@@ -95,7 +95,14 @@ const movieOverview: FC<movieOverviewProps> = () => {
         {movieArray.length >= 1 ? (
           movieArray.map((movie, i) => {
             return (
-              <DisplayCard displayName={movie.title} author={movie.year} image={movie.image!} key={'Movie-' + i} link={movie.link}></DisplayCard>
+              <DisplayCard
+                displayName={movie.title}
+                info={movie.year}
+                image={movie.image !== 'N/A' ? movie.image : null}
+                key={'Movie-' + i}
+                link={movie.link}
+                showDelButton={false}
+                showAddButton={true}></DisplayCard>
             );
           })
         ) : (
