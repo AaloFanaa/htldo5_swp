@@ -9,7 +9,8 @@ import firebase, { initializeApp } from 'firebase/app';
 import 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 
-const bestsellerUrl = 'https://api.nytimes.com/svc/books/v3/lists.json?list=hardcover-fiction&api-key=qkQgmC5hGtFlpt5A9BvWA09S2zAu6SUE';
+const bestsellerUrl =
+  'https://api.nytimes.com/svc/books/v3/lists.json?list=hardcover-fiction&api-key=qkQgmC5hGtFlpt5A9BvWA09S2zAu6SUE';
 // const bestsellerUrl = 'AAAAA';
 
 const firebaseConfig = {
@@ -57,7 +58,15 @@ export default function App() {
       }}>
       {/* <div className={styles.wrapperBooks}> */}
       {bookArray?.map((book) => {
-        return <DisplayCard displayName={book.book_details[0].title} author={book.book_details[0].author} image={null} link={'1233'}></DisplayCard>;
+        return (
+          <DisplayCard
+            displayName={book.book_details[0].title}
+            author={book.book_details[0].author}
+            image={null}
+            link={'1233'}
+            showDelButton={false}
+            showAddButton={true}></DisplayCard>
+        );
       })}
       {/* </div> */}
     </div>

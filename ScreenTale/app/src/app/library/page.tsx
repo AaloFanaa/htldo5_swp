@@ -15,29 +15,27 @@ type Entry = {
   image: string | null;
   author: string | null;
   link: string;
-};
+} | null;
 
-const library: FC<libraryProps> = () => {
+const Library: FC<libraryProps> = () => {
   const { activePage, setActivePage } = useActivePage();
   const [entryArray, setEntryArray] = useState<Array<Entry>>([]);
-
   const sessionData = useSession();
 
   useEffect(() => {
-    setActivePage(3); //Make sure the right page gets selected
+    setActivePage(3); // sicherstellen, dass die richtige Seite ausgewählt wird
     fetchUserData();
     console.log(sessionData);
   }, []);
 
-  //Fetching user Data
   const fetchUserData = async () => {
     setEntryArray([]);
     console.log('Fetching...');
 
-    //Fetching the saved entries
     //@ts-expect-error
     let userId = await sessionData.data?.user.id;
     let userData;
+
     try {
       const querySnapshot = await getDocs(
         collection(firestore, 'user-libraries')
@@ -51,19 +49,21 @@ const library: FC<libraryProps> = () => {
       console.error('Error reading user: ', e);
       return;
     }
+
     console.log(userData);
-    //Getting data of the fetched entries
-    Object.values(userData!).forEach(async (entry: any) => {
+
+    // Verwende Promise.all für asynchrone Fetch-Anfragen
+    const entryPromises = Object.values(userData!).map(async (entry: any) => {
       try {
         const response = await fetch(entry);
         if (!response.ok) {
           throw new Error('Failed to fetch data from the API');
         }
         const result: any = await response.json();
-        if (result.totalItems == 0) {
-          return;
+        if (result.totalItems === 0) {
+          return null;
         }
-        let newEntry: Entry = {
+        return {
           title: result.volumeInfo.title,
           image: result.volumeInfo.imageLinks
             ? result.volumeInfo.imageLinks.thumbnail
@@ -73,11 +73,18 @@ const library: FC<libraryProps> = () => {
             : null,
           link: result.selfLink,
         };
-        setEntryArray((entryArray) => [...entryArray, newEntry]);
       } catch (error) {
-        console.log('An error occured:', error);
+        console.log('An error occurred:', error);
+        return null;
       }
     });
+
+    // Warte auf Abschluss aller asynchronen Fetch-Anfragen
+    const entries = await Promise.all(entryPromises);
+
+    // Filtere null-Werte heraus und setze den State
+    setEntryArray(entries.filter((entry) => entry !== null));
+
     console.log(entryArray);
   };
 
@@ -93,7 +100,9 @@ const library: FC<libraryProps> = () => {
                 author={entry.author}
                 image={entry.image!}
                 key={'Book-' + i}
-                link={entry.link}></DisplayCard>
+                link={entry.link}
+                showDelButton={true}
+                showAddButton={false}></DisplayCard>
             );
           })
         ) : (
@@ -104,4 +113,4 @@ const library: FC<libraryProps> = () => {
   );
 };
 
-export default library;
+export default Library;
