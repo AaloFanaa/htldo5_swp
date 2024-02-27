@@ -7,6 +7,11 @@ import { collection, getDocs } from 'firebase/firestore';
 import styles from './page.module.css';
 import DisplayCard from '../components/displayCard';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+
+import filterAZ from '../../../public/arrow-down-a-z-solid.svg';
+import filterZA from '../../../public/arrow-up-a-z-solid.svg';
+import searchIcon from '../../../public/search-icon.svg';
 
 interface libraryProps {}
 
@@ -15,11 +20,13 @@ type Entry = {
   image: string | null;
   info: string | null;
   link: string;
-} | null;
+  type: string;
+};
 
 const Library: FC<libraryProps> = () => {
   const { activePage, setActivePage } = useActivePage();
   const [entryArray, setEntryArray] = useState<Array<Entry>>([]);
+  const [showSearchBar, setShowSearchBar] = useState<boolean>();
   const sessionData = useSession();
   const omdbApiKey = 'b93d24e3';
 
@@ -68,6 +75,7 @@ const Library: FC<libraryProps> = () => {
             image: result.volumeInfo.imageLinks ? result.volumeInfo.imageLinks.thumbnail : null,
             info: result.volumeInfo.authors ? result.volumeInfo.authors[0] : null,
             link: result.selfLink,
+            type: 'book',
           };
         }
         return {
@@ -75,6 +83,7 @@ const Library: FC<libraryProps> = () => {
           image: result.Poster,
           link: `http://www.omdbapi.com/?apikey=${omdbApiKey}&t=${result.Title}`,
           info: result.Year,
+          type: 'movie',
         };
       } catch (error) {
         console.log('An error occurred:', error);
@@ -84,6 +93,7 @@ const Library: FC<libraryProps> = () => {
 
     const entries = await Promise.all(entryPromises);
 
+    //@ts-expect-error
     setEntryArray(entries.filter((entry) => entry !== null));
 
     console.log(entryArray);
@@ -94,11 +104,50 @@ const Library: FC<libraryProps> = () => {
     return;
   };
 
+  const filterAtoZ = () => {
+    let tmp = entryArray;
+    tmp = tmp.filter((entry) => typeof entry.displayName === 'string').sort((a, b) => a.displayName.localeCompare(b.displayName));
+    console.log('Filtering from A to Z', tmp);
+    setEntryArray(tmp);
+  };
+
+  const filterZtoA = () => {
+    let tmp = entryArray;
+    tmp = tmp.filter((entry) => typeof entry.displayName === 'string').sort((a, b) => b.displayName.localeCompare(a.displayName));
+    console.log('Filtering from Z to A', tmp);
+    setEntryArray(tmp);
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <div className={styles.headerText}>Your library</div>
-        <div className={styles.headerIcon}></div>
+        <div className={styles.searchBarWrapper}>
+          <input className={`${styles.searchBarInput} ${showSearchBar ? styles.searchBarActive : ''}`} type='text' />
+          <div
+            className={styles.searchIconWrapper}
+            onClick={() => {
+              setShowSearchBar(!showSearchBar);
+            }}>
+            <Image src={searchIcon} alt={'SearchIcon'} className={styles.searchBarIcon} />
+          </div>
+        </div>
+        <div className={styles.headerIconWrapper}>
+          <div
+            className={styles.iconWrapper}
+            onClick={() => {
+              filterAtoZ();
+            }}>
+            <Image priority src={filterAZ} alt='Filter from A to Z' className={styles.headerIcon} />
+          </div>
+          <div
+            className={styles.iconWrapper}
+            onClick={() => {
+              filterZtoA();
+            }}>
+            <Image priority src={filterZA} alt='Filter from Z to A' className={styles.headerIcon} />
+          </div>
+        </div>
       </div>
       <div className={styles.contentWrapper}>
         {entryArray.length >= 1 ? (
