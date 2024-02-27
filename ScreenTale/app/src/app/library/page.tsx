@@ -37,7 +37,9 @@ const Library: FC<libraryProps> = () => {
     let userData;
 
     try {
-      const querySnapshot = await getDocs(collection(firestore, 'user-libraries'));
+      const querySnapshot = await getDocs(
+        collection(firestore, 'user-libraries')
+      );
       querySnapshot.forEach((doc) => {
         if (doc.id == userId) {
           userData = doc.data();
@@ -63,8 +65,12 @@ const Library: FC<libraryProps> = () => {
         }
         return {
           title: result.volumeInfo.title,
-          image: result.volumeInfo.imageLinks ? result.volumeInfo.imageLinks.thumbnail : null,
-          author: result.volumeInfo.authors ? result.volumeInfo.authors[0] : null,
+          image: result.volumeInfo.imageLinks
+            ? result.volumeInfo.imageLinks.thumbnail
+            : null,
+          author: result.volumeInfo.authors
+            ? result.volumeInfo.authors[0]
+            : null,
           link: result.selfLink,
         };
       } catch (error) {
