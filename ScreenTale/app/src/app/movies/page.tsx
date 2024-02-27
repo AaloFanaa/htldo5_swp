@@ -140,7 +140,7 @@ const MovieOverview: FC<movieOverviewProps> = () => {
         )}
         {showNoResultsMessage && (
           <div className={styles.noResultsMessage}>
-            No results found for this search term!!!!
+            No results found for this search term
           </div>
         )}
       </div>
