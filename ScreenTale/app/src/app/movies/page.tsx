@@ -22,6 +22,8 @@ const MovieOverview: FC<movieOverviewProps> = () => {
   const [searchString, setSearchString] = useState<string>('');
   const [movieArray, setMovieArray] = useState<Array<Movie>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showNoResultsMessage, setShowNoResultsMessage] =
+    useState<boolean>(false);
 
   const apiKey = 'b93d24e3';
 
@@ -48,14 +50,20 @@ const MovieOverview: FC<movieOverviewProps> = () => {
       console.log('Searching for: ' + searchString);
       setMovieArray([]);
       setIsLoading(true);
+      setShowNoResultsMessage(false);
+
       try {
         const response = await fetch(createSearchUrl(searchString));
         if (!response.ok) {
           throw new Error('Failed to fetch data from the API');
         }
         const result: any = await response.json();
-        if (result.Response === false) {
-          alert('No movie found!');
+        if (result.Response === 'False') {
+          setShowNoResultsMessage(true);
+          return;
+        }
+        if (result.Search.length === 0) {
+          setShowNoResultsMessage(true);
           return;
         }
         result.Search.forEach((res: any, i: number) => {
@@ -111,6 +119,7 @@ const MovieOverview: FC<movieOverviewProps> = () => {
       ) : (
         <></>
       )}
+
       <div className={styles.resultsWrapper}>
         {movieArray.length >= 1 ? (
           movieArray.map((movie, i) => {
@@ -128,6 +137,11 @@ const MovieOverview: FC<movieOverviewProps> = () => {
           })
         ) : (
           <></>
+        )}
+        {showNoResultsMessage && (
+          <div className={styles.noResultsMessage}>
+            No results found for this search term!!!!
+          </div>
         )}
       </div>
     </div>
