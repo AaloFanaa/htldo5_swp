@@ -102,7 +102,8 @@ const movieOverview: FC<movieOverviewProps> = () => {
                 key={'Movie-' + i}
                 link={movie.link}
                 showDelButton={false}
-                showAddButton={true}></DisplayCard>
+                showAddButton={true}
+                onDelete={() => {}}></DisplayCard>
             );
           })
         ) : (

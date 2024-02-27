@@ -98,7 +98,8 @@ const bookOverview: FC<bookOverviewProps> = () => {
                 key={'Book-' + i}
                 link={book.link}
                 showDelButton={false}
-                showAddButton={true}></DisplayCard>
+                showAddButton={true}
+                onDelete={() => {}}></DisplayCard>
             );
           })
         ) : (

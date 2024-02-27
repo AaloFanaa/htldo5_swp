@@ -14,19 +14,18 @@ interface displayCardProps {
   link: string;
   showDelButton: boolean;
   showAddButton: boolean;
-  onDelete: () => Promise<void>;
+  onDelete: () => void;
 }
 
 const DisplayCard: FC<displayCardProps> = (props) => {
   const sessionData = useSession();
   let user: User & { id: string };
-  const getUser = async () => {
-    //@ts-expect-error
-    user = await sessionData.data?.user;
-  };
+
+  //@ts-expect-error
+  let userId = sessionData.data?.user.id;
 
   const addToLibrary = async (name: string, link: string) => {
-    const userRef = doc(firestore, 'user-libraries', user.id);
+    const userRef = doc(firestore, 'user-libraries', userId);
     try {
       await setDoc(userRef, { [props.displayName]: props.link }, { merge: true });
       alert('Successfully added entry to the library!');
@@ -37,7 +36,7 @@ const DisplayCard: FC<displayCardProps> = (props) => {
   };
 
   const deleteFromLibrary = async (name: string) => {
-    const userRef = doc(firestore, 'user-libraries', user.id);
+    const userRef = doc(firestore, 'user-libraries', userId);
     try {
       await updateDoc(userRef, { [props.displayName]: deleteField() });
       alert('Successfully removed entry from the library!');

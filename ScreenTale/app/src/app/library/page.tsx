@@ -11,9 +11,9 @@ import { useSession } from 'next-auth/react';
 interface libraryProps {}
 
 type Entry = {
-  title: string;
+  displayName: string;
   image: string | null;
-  author: string | null;
+  info: string | null;
   link: string;
 } | null;
 
@@ -21,6 +21,7 @@ const Library: FC<libraryProps> = () => {
   const { activePage, setActivePage } = useActivePage();
   const [entryArray, setEntryArray] = useState<Array<Entry>>([]);
   const sessionData = useSession();
+  const omdbApiKey = 'b93d24e3';
 
   useEffect(() => {
     setActivePage(3); // sicherstellen, dass die richtige Seite ausgewählt wird
@@ -34,12 +35,11 @@ const Library: FC<libraryProps> = () => {
 
     //@ts-expect-error
     let userId = await sessionData.data?.user.id;
+    console.log(userId);
     let userData;
 
     try {
-      const querySnapshot = await getDocs(
-        collection(firestore, 'user-libraries')
-      );
+      const querySnapshot = await getDocs(collection(firestore, 'user-libraries'));
       querySnapshot.forEach((doc) => {
         if (doc.id == userId) {
           userData = doc.data();
@@ -52,7 +52,6 @@ const Library: FC<libraryProps> = () => {
 
     console.log(userData);
 
-    // Verwende Promise.all für asynchrone Fetch-Anfragen
     const entryPromises = Object.values(userData!).map(async (entry: any) => {
       try {
         const response = await fetch(entry);
@@ -63,15 +62,19 @@ const Library: FC<libraryProps> = () => {
         if (result.totalItems === 0) {
           return null;
         }
+        if (result.volumeInfo) {
+          return {
+            displayName: result.volumeInfo.title,
+            image: result.volumeInfo.imageLinks ? result.volumeInfo.imageLinks.thumbnail : null,
+            info: result.volumeInfo.authors ? result.volumeInfo.authors[0] : null,
+            link: result.selfLink,
+          };
+        }
         return {
-          title: result.volumeInfo.title,
-          image: result.volumeInfo.imageLinks
-            ? result.volumeInfo.imageLinks.thumbnail
-            : null,
-          author: result.volumeInfo.authors
-            ? result.volumeInfo.authors[0]
-            : null,
-          link: result.selfLink,
+          displayName: result.Title,
+          image: result.Poster,
+          link: `http://www.omdbapi.com/?apikey=${omdbApiKey}&t=${result.Title}`,
+          info: result.Year,
         };
       } catch (error) {
         console.log('An error occurred:', error);
@@ -79,33 +82,34 @@ const Library: FC<libraryProps> = () => {
       }
     });
 
-    // Warte auf Abschluss aller asynchronen Fetch-Anfragen
     const entries = await Promise.all(entryPromises);
 
-    // Filtere null-Werte heraus und setze den State
     setEntryArray(entries.filter((entry) => entry !== null));
 
     console.log(entryArray);
   };
 
   const handleDelete = async () => {
-    // Aktualisiere die Benutzeroberfläche nach dem Löschen
-    await fetchUserData();
+    fetchUserData();
+    return;
   };
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.header}>Your library</div>
+      <div className={styles.header}>
+        <div className={styles.headerText}>Your library</div>
+        <div className={styles.headerIcon}></div>
+      </div>
       <div className={styles.contentWrapper}>
         {entryArray.length >= 1 ? (
           entryArray.map((entry, i) => {
             return (
               <DisplayCard
-                displayName={entry.title}
-                author={entry.author}
-                image={entry.image!}
-                key={'Book-' + i}
-                link={entry.link}
+                displayName={entry!.displayName}
+                info={entry!.info}
+                image={entry!.image!}
+                key={'Entry-' + i}
+                link={entry!.link}
                 showDelButton={true}
                 showAddButton={false}
                 onDelete={() => {
