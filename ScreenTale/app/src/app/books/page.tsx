@@ -23,6 +23,8 @@ const bookOverview: FC<bookOverviewProps> = () => {
   const [searchString, setSearchString] = useState<string>('');
   const [bookArray, setBookArray] = useState<Array<Book>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showNoResultsMessage, setShowNoResultsMessage] =
+    useState<boolean>(false);
   const apiKey: string = 'AIzaSyC3ZyjlEmP3yUoPQbGq7-A7p6Eu4-lDCtY';
 
   const createSearchUrl: (searchKey: string) => string = (
@@ -44,6 +46,7 @@ const bookOverview: FC<bookOverviewProps> = () => {
   ) => {
     if (event.key === 'Enter') {
       setIsLoading(true);
+      setShowNoResultsMessage(false);
       setBookArray([]);
       console.log('Searching for: ' + searchString);
       const fetchData = async () => {
@@ -52,9 +55,11 @@ const bookOverview: FC<bookOverviewProps> = () => {
           if (!response.ok) {
             throw new Error('Failed to fetch data from the API');
           }
+
           const result: any = await response.json();
           console.log(result);
           if (result.totalItems == 0) {
+            setShowNoResultsMessage(true);
             return;
           }
           result.items.forEach((res: any, i: number) => {
@@ -129,6 +134,11 @@ const bookOverview: FC<bookOverviewProps> = () => {
           })
         ) : (
           <></>
+        )}
+        {showNoResultsMessage && (
+          <div className={styles.noResultsMessage}>
+            No results found for this search term
+          </div>
         )}
       </div>
     </div>
