@@ -4,7 +4,7 @@ import Image from 'next/image';
 import placeholderImage from '../../../public/bookPlaceholder.png';
 import { useSession } from 'next-auth/react';
 import { firestore } from '../page';
-import { doc, setDoc, deleteDoc, updateDoc, deleteField } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, deleteField } from 'firebase/firestore';
 import { User } from 'next-auth';
 
 interface displayCardProps {

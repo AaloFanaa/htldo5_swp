@@ -3,9 +3,8 @@
 import styles from './page.module.css';
 import { useEffect, useState } from 'react';
 import { useActivePage } from './context/navbarProvider';
-import { Gentium_Book_Plus } from 'next/font/google';
 import DisplayCard from './components/displayCard';
-import firebase, { initializeApp } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import 'firebase/firestore';
 import { getFirestore } from 'firebase/firestore';
 
@@ -56,6 +55,7 @@ export default function App() {
         if (resultMovie.Search.length === 0) {
           return;
         }
+        let tmpEntryArray: Array<Entry> = [];
         resultMovie.Search.forEach((res: any, i: number) => {
           console.log(res);
           let newEntry: Entry = {
@@ -65,22 +65,24 @@ export default function App() {
             info: res.Year,
             type: 'movie',
           };
-          setEntryArray((entryArray) => [...entryArray, newEntry]);
+          tmpEntryArray.push(newEntry);
         });
         const resultBook: any = await responseBook.json();
         if (resultBook.totalItems == 0) {
           return;
         }
         resultBook.items.forEach((res: any, i: number) => {
-          let newBook: Entry = {
+          let newEntry: Entry = {
             displayName: res.volumeInfo.title,
             image: res.volumeInfo.imageLinks ? res.volumeInfo.imageLinks.thumbnail : null,
             info: res.volumeInfo.authors ? res.volumeInfo.authors[0] : null,
             link: res.selfLink,
             type: 'book',
           };
-          setEntryArray((entryArray) => [...entryArray, newBook]);
+          tmpEntryArray.push(newEntry);
         });
+        const shuffledArray = [...tmpEntryArray].sort(() => Math.random() - 0.5);
+        setEntryArray(shuffledArray);
       } catch (error) {
         console.error('Error fetching data', error);
       } finally {
@@ -89,8 +91,6 @@ export default function App() {
       }
     };
     fetchData();
-    const shuffledArray = [...entryArray].sort(() => Math.random() - 0.5);
-    setEntryArray(shuffledArray);
   }, []);
 
   return (

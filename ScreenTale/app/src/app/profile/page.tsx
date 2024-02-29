@@ -10,7 +10,7 @@ const profile: FC<profileProps> = () => {
   useEffect(() => {
     setActivePage(null);
   }, []);
-  return <div>Profile</div>;
+  return <div>Nothing to see here!</div>;
 };
 
 export default profile;

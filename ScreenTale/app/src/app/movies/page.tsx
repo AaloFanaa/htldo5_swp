@@ -22,8 +22,7 @@ const MovieOverview: FC<movieOverviewProps> = () => {
   const [searchString, setSearchString] = useState<string>('');
   const [movieArray, setMovieArray] = useState<Array<Movie>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [showNoResultsMessage, setShowNoResultsMessage] =
-    useState<boolean>(false);
+  const [showNoResultsMessage, setShowNoResultsMessage] = useState<boolean>(false);
 
   const apiKey = 'b93d24e3';
 
@@ -126,11 +125,7 @@ const MovieOverview: FC<movieOverviewProps> = () => {
         ) : (
           <></>
         )}
-        {showNoResultsMessage && (
-          <div className={styles.noResultsMessage}>
-            No results found for this search term
-          </div>
-        )}
+        {showNoResultsMessage && <div className={styles.noResultsMessage}>No results found for this search term</div>}
       </div>
     </div>
   );

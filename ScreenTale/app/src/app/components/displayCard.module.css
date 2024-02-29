@@ -61,10 +61,9 @@
 }
 
 .deleteButton {
-  background-color: #ff4655; /* Farbe nach Wunsch anpassen */
-  color: #fff;
+  background-color: var(--secondary-color);
 }
 
 .deleteButton:hover {
-  background-color: #e53745; /* Farbe nach Wunsch anpassen */
+  opacity: 0.8;
 }

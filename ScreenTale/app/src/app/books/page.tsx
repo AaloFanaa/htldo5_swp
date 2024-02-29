@@ -7,7 +7,6 @@ import Image from 'next/image';
 
 import searchIcon from '../../../public/search-icon.svg';
 import DisplayCard from '../components/displayCard';
-import { useSession } from 'next-auth/react';
 
 interface bookOverviewProps {}
 
@@ -102,7 +101,6 @@ const bookOverview: FC<bookOverviewProps> = () => {
         <></>
       )}
       <div className={styles.resultsWrapper}>
-        {/* <DisplayCard displayName='Test' author='Bernhard' image={null} link='Wasser'></DisplayCard> */}
         {bookArray.length >= 1 ? (
           bookArray.map((book, i) => {
             return (
