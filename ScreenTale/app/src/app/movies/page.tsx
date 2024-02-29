@@ -31,21 +31,15 @@ const MovieOverview: FC<movieOverviewProps> = () => {
     setActivePage(2);
   }, []);
 
-  const createSearchUrl: (searchKey: string) => string = (
-    searchKey: string
-  ) => {
+  const createSearchUrl: (searchKey: string) => string = (searchKey: string) => {
     return `http://www.omdbapi.com/?s=${searchKey}&apikey=${apiKey}&page=10`;
   };
 
-  const handleSearchChange: (event: ChangeEvent<HTMLInputElement>) => void = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleSearchChange: (event: ChangeEvent<HTMLInputElement>) => void = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchString(event.target.value);
   };
 
-  const handleSearchEnter: (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ) => void = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSearchEnter: (event: React.KeyboardEvent<HTMLInputElement>) => void = async (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       console.log('Searching for: ' + searchString);
       setMovieArray([]);
@@ -91,13 +85,7 @@ const MovieOverview: FC<movieOverviewProps> = () => {
       <div className={styles.searchWrapper}>
         <div className={styles.searchBarWrapper}>
           <div className={styles.searchBarLabel}>
-            <Image
-              src={searchIcon}
-              alt='Search'
-              className={styles.searchBarLabelIcon}
-              width={30}
-              height={30}
-            />
+            <Image src={searchIcon} alt='Search' className={styles.searchBarLabelIcon} width={30} height={30} />
           </div>
           <input
             className={styles.searchBarText}

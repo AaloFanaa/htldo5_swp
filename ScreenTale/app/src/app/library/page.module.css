@@ -21,7 +21,40 @@
   font-weight: bold;
   text-align: center;
   margin-left: 2rem;
-  padding: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  cursor: default;
+  user-select: none;
+}
+
+.headerIconWrapper {
+  display: flex;
+  height: 6rem;
+  width: 6rem;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-right: 2rem;
+}
+
+.iconWrapper {
+  height: 2.8rem;
+  width: 2.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s all;
+  position: relative;
+  border-radius: 0.3rem;
+}
+
+.headerIcon {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.iconWrapper:hover {
+  background-color: var(--secondary-color);
 }
 
 .contentWrapper {
@@ -29,8 +62,6 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
-
-/* Stildefinitionen für die DisplayCard-Komponente */
 
 .display-card {
   width: 200px;
@@ -46,26 +77,42 @@
   transform: scale(1.05);
 }
 
-.card-image {
-  max-width: 100%;
-  height: auto;
+.searchBarWrapper {
+  width: 70%;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.card-info {
-  padding: 10px;
+.searchBarInput {
+  outline: none;
+  border: none;
+  border-bottom: 3px solid var(--text-color);
+  background-color: var(--primary-color);
+  width: 93%;
+  font-size: 1.8rem;
+  transform: scaleX(0);
+  transition: 0.3s all;
+  transform-origin: right;
 }
 
-.card-link {
-  display: block;
-  text-align: center;
-  padding: 10px;
-  background-color: var(--secondary-color);
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+.searchBarActive {
+  transform: scaleX(1);
 }
 
-.card-link:hover {
-  background-color: var(--secondary-highlight-color);
+.searchBarActive:focus {
+  border-color: var(--secondary-color);
+}
+
+.searchIconWrapper {
+  width: 5%;
+  cursor: pointer;
+}
+
+.searchBarIcon {
+  filter: invert(1);
+  height: 2.5rem;
+  width: 2.5rem;
 }
