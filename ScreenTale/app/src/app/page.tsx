@@ -28,11 +28,13 @@ export const firestore = getFirestore(app);
 export default function App() {
   const { activePage, setActivePage } = useActivePage();
   const [bookArray, setBookArray] = useState<Array<any> | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setActivePage(0);
     console.log('Initialiting to fetch data...');
     const fetchData = async () => {
+      setIsLoading(true);
       console.log('Fetching data...');
       try {
         const response = await fetch(bestsellerUrl);
@@ -44,6 +46,7 @@ export default function App() {
       } catch (error) {
         console.log('Error fetching data', error);
       } finally {
+        setIsLoading(false);
         console.log('Done fetching!');
       }
     };
@@ -51,24 +54,26 @@ export default function App() {
   }, []);
 
   return (
-    <div
-      className={styles.wrapper}
-      onClick={() => {
-        console.log(bookArray);
-      }}>
-      {/* <div className={styles.wrapperBooks}> */}
+    <div className={styles.wrapper}>
+      {isLoading ? (
+        <div className={styles.loaderContainer}>
+          <span className={styles.loader}></span>
+        </div>
+      ) : (
+        <></>
+      )}
       {bookArray?.map((book) => {
         return (
           <DisplayCard
+            onDelete={() => {}}
             displayName={book.book_details[0].title}
-            author={book.book_details[0].author}
+            info={book.book_details[0].author}
             image={null}
             link={'1233'}
             showDelButton={false}
             showAddButton={true}></DisplayCard>
         );
       })}
-      {/* </div> */}
     </div>
   );
 }
