@@ -52,6 +52,7 @@
 .resultsWrapper {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .searchBarText::placeholder {
