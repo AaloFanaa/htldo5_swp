@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useActivePage } from '../context/navbarProvider';
 import { firestore } from '../page';
 import { collection, getDocs } from 'firebase/firestore';
@@ -12,6 +12,7 @@ import Image from 'next/image';
 import filterAZ from '../../../public/arrow-down-a-z-solid.svg';
 import filterZA from '../../../public/arrow-up-a-z-solid.svg';
 import searchIcon from '../../../public/search-icon.svg';
+import { update } from 'firebase/database';
 
 interface libraryProps {}
 
@@ -21,12 +22,14 @@ type Entry = {
   info: string | null;
   link: string;
   type: string;
+  shown: boolean;
 };
 
 const Library: FC<libraryProps> = () => {
   const { activePage, setActivePage } = useActivePage();
   const [entryArray, setEntryArray] = useState<Array<Entry>>([]);
-  const [showSearchBar, setShowSearchBar] = useState<boolean>();
+  const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
+  const [searchBarFocus, setSearchBarFocus] = useState<boolean>(false);
   const sessionData = useSession();
   const omdbApiKey = 'b93d24e3';
 
@@ -76,6 +79,7 @@ const Library: FC<libraryProps> = () => {
             info: result.volumeInfo.authors ? result.volumeInfo.authors[0] : null,
             link: result.selfLink,
             type: 'book',
+            shown: true,
           };
         }
         return {
@@ -84,6 +88,7 @@ const Library: FC<libraryProps> = () => {
           link: `http://www.omdbapi.com/?apikey=${omdbApiKey}&t=${result.Title}`,
           info: result.Year,
           type: 'movie',
+          shown: true,
         };
       } catch (error) {
         console.log('An error occurred:', error);
@@ -95,7 +100,6 @@ const Library: FC<libraryProps> = () => {
 
     //@ts-expect-error
     setEntryArray(entries.filter((entry) => entry !== null));
-
     console.log(entryArray);
   };
 
@@ -118,18 +122,45 @@ const Library: FC<libraryProps> = () => {
     setEntryArray(tmp);
   };
 
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const searchString = e.target.value.toLowerCase();
+    const updatedEntryArray = entryArray.map((entry) => ({
+      ...entry,
+      shown: entry.displayName.toLowerCase().includes(searchString),
+    }));
+    setEntryArray(updatedEntryArray);
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <div className={styles.headerText}>Your library</div>
         <div className={styles.searchBarWrapper}>
-          <input className={`${styles.searchBarInput} ${showSearchBar ? styles.searchBarActive : ''}`} type='text' />
+          <input
+            className={`${styles.searchBarInput} ${showSearchBar ? styles.searchBarActive : ''}`}
+            id='searchBar'
+            type='text'
+            onChange={(event) => {
+              handleSearchChange(event);
+            }}
+            onFocus={() => {
+              setSearchBarFocus(!searchBarFocus);
+            }}
+            onBlur={async () => {
+              setSearchBarFocus(!searchBarFocus);
+            }}
+          />
           <div
             className={styles.searchIconWrapper}
             onClick={() => {
+              if (!showSearchBar) {
+                document.getElementById('searchBar')?.focus();
+              } else {
+                document.getElementById('searchBar')?.blur();
+              }
               setShowSearchBar(!showSearchBar);
             }}>
-            <Image src={searchIcon} alt={'SearchIcon'} className={styles.searchBarIcon} />
+            <Image src={searchIcon} alt={'SearchIcon'} className={`${styles.searchBarIcon} ${searchBarFocus ? styles.searchBarIconFocus : ''}`} />
           </div>
         </div>
         <div className={styles.headerIconWrapper}>
@@ -152,6 +183,9 @@ const Library: FC<libraryProps> = () => {
       <div className={styles.contentWrapper}>
         {entryArray.length >= 1 ? (
           entryArray.map((entry, i) => {
+            if (!entry.shown) {
+              return <></>;
+            }
             return (
               <DisplayCard
                 displayName={entry!.displayName}

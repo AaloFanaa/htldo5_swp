@@ -81,8 +81,8 @@
   width: 70%;
   /* border: 1px solid red; */
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: row-reverse;
+  justify-content: end;
   align-items: center;
 }
 
@@ -91,19 +91,24 @@
   border: none;
   border-bottom: 3px solid var(--text-color);
   background-color: var(--primary-color);
-  width: 93%;
+  width: 0%;
+  opacity: 0;
   font-size: 1.8rem;
-  transform: scaleX(0);
   transition: 0.3s all;
   transform-origin: right;
 }
 
 .searchBarActive {
-  transform: scaleX(1);
+  width: 93% !important;
+  opacity: 1 !important;
 }
 
 .searchBarActive:focus {
   border-color: var(--secondary-color);
+}
+
+.searchBarIconFocus {
+  filter: invert(33%) sepia(33%) saturate(7480%) hue-rotate(328deg) brightness(101%) contrast(101%) !important;
 }
 
 .searchIconWrapper {
@@ -112,6 +117,7 @@
 }
 
 .searchBarIcon {
+  transition: 0.3s all;
   filter: invert(1);
   height: 2.5rem;
   width: 2.5rem;
