@@ -4,7 +4,7 @@
   justify-content: space-between;
   flex-direction: column;
   height: 19.5rem;
-  min-width: 12rem;
+  width: 12rem;
   margin: 1rem;
   background-color: var(--bg-highlight-color);
   transition: 0.3s all;
@@ -18,9 +18,14 @@
 
 .name {
   font-size: 1.2rem;
+  width: 12rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
 }
 
-.author {
+.info {
   font-size: 1rem;
 }
 

@@ -57,7 +57,7 @@ const DisplayCard: FC<displayCardProps> = (props) => {
         )}
       </div>
       <div className={styles.name}>{props.displayName}</div>
-      <div className={styles.author}>{props.info}</div>
+      <div className={styles.info}>{props.info}</div>
       <div className={styles.buttonsWrapper}>
         {props.showAddButton ? (
           <div className={styles.addButton} onClick={() => addToLibrary(props.displayName, props.link)}>
