@@ -23,27 +23,20 @@ const bookOverview: FC<bookOverviewProps> = () => {
   const [searchString, setSearchString] = useState<string>('');
   const [bookArray, setBookArray] = useState<Array<Book>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [showNoResultsMessage, setShowNoResultsMessage] =
-    useState<boolean>(false);
+  const [showNoResultsMessage, setShowNoResultsMessage] = useState<boolean>(false);
   const apiKey: string = 'AIzaSyC3ZyjlEmP3yUoPQbGq7-A7p6Eu4-lDCtY';
 
-  const createSearchUrl: (searchKey: string) => string = (
-    searchKey: string
-  ) => {
-    return `https://www.googleapis.com/books/v1/volumes?q=title${searchKey}&key=${apiKey}`;
+  const createSearchUrl: (searchKey: string) => string = (searchKey: string) => {
+    return `https://www.googleapis.com/books/v1/volumes?q=${searchKey}&key=${apiKey}`;
   };
 
   useEffect(() => {
     setActivePage(1);
   }, []);
-  const handleSearchChange: (event: ChangeEvent<HTMLInputElement>) => void = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleSearchChange: (event: ChangeEvent<HTMLInputElement>) => void = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchString(event.target.value);
   };
-  const handleSearchEnter: (event: KeyboardEvent<HTMLInputElement>) => void = (
-    event: KeyboardEvent<HTMLInputElement>
-  ) => {
+  const handleSearchEnter: (event: KeyboardEvent<HTMLInputElement>) => void = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       setIsLoading(true);
       setShowNoResultsMessage(false);
@@ -65,9 +58,7 @@ const bookOverview: FC<bookOverviewProps> = () => {
           result.items.forEach((res: any, i: number) => {
             let newBook: Book = {
               title: res.volumeInfo.title,
-              image: res.volumeInfo.imageLinks
-                ? res.volumeInfo.imageLinks.thumbnail
-                : null,
+              image: res.volumeInfo.imageLinks ? res.volumeInfo.imageLinks.thumbnail : null,
               author: res.volumeInfo.authors ? res.volumeInfo.authors[0] : null,
               link: res.selfLink,
             };
@@ -88,13 +79,7 @@ const bookOverview: FC<bookOverviewProps> = () => {
       <div className={styles.searchWrapper}>
         <div className={styles.searchBarWrapper}>
           <div className={styles.searchBarLabel}>
-            <Image
-              src={searchIcon}
-              alt='Search'
-              className={styles.searchBarLabelIcon}
-              width={30}
-              height={30}
-            />
+            <Image src={searchIcon} alt='Search' className={styles.searchBarLabelIcon} width={30} height={30} />
           </div>
           <input
             className={styles.searchBarText}
@@ -135,11 +120,7 @@ const bookOverview: FC<bookOverviewProps> = () => {
         ) : (
           <></>
         )}
-        {showNoResultsMessage && (
-          <div className={styles.noResultsMessage}>
-            No results found for this search term
-          </div>
-        )}
+        {showNoResultsMessage && <div className={styles.noResultsMessage}>No results found for this search term</div>}
       </div>
     </div>
   );
