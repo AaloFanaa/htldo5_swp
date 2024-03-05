@@ -30,6 +30,7 @@ const Library: FC<libraryProps> = () => {
   const [entryArray, setEntryArray] = useState<Array<Entry>>([]);
   const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
   const [searchBarFocus, setSearchBarFocus] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const sessionData = useSession();
   const omdbApiKey = 'b93d24e3';
 
@@ -41,6 +42,7 @@ const Library: FC<libraryProps> = () => {
 
   const fetchUserData = async () => {
     setEntryArray([]);
+    setIsLoading(true);
     console.log('Fetching...');
 
     //@ts-expect-error
@@ -49,7 +51,9 @@ const Library: FC<libraryProps> = () => {
     let userData;
 
     try {
-      const querySnapshot = await getDocs(collection(firestore, 'user-libraries'));
+      const querySnapshot = await getDocs(
+        collection(firestore, 'user-libraries')
+      );
       querySnapshot.forEach((doc) => {
         if (doc.id == userId) {
           userData = doc.data();
@@ -75,8 +79,12 @@ const Library: FC<libraryProps> = () => {
         if (result.volumeInfo) {
           return {
             displayName: result.volumeInfo.title,
-            image: result.volumeInfo.imageLinks ? result.volumeInfo.imageLinks.thumbnail : null,
-            info: result.volumeInfo.authors ? result.volumeInfo.authors[0] : null,
+            image: result.volumeInfo.imageLinks
+              ? result.volumeInfo.imageLinks.thumbnail
+              : null,
+            info: result.volumeInfo.authors
+              ? result.volumeInfo.authors[0]
+              : null,
             link: result.selfLink,
             type: 'book',
             shown: true,
@@ -101,8 +109,8 @@ const Library: FC<libraryProps> = () => {
     //@ts-expect-error
     setEntryArray(entries.filter((entry) => entry !== null));
     console.log(entryArray);
+    setIsLoading(false);
   };
-
   const handleDelete = async () => {
     fetchUserData();
     return;
@@ -110,14 +118,18 @@ const Library: FC<libraryProps> = () => {
 
   const filterAtoZ = () => {
     let tmp = entryArray;
-    tmp = tmp.filter((entry) => typeof entry.displayName === 'string').sort((a, b) => a.displayName.localeCompare(b.displayName));
+    tmp = tmp
+      .filter((entry) => typeof entry.displayName === 'string')
+      .sort((a, b) => a.displayName.localeCompare(b.displayName));
     console.log('Filtering from A to Z', tmp);
     setEntryArray(tmp);
   };
 
   const filterZtoA = () => {
     let tmp = entryArray;
-    tmp = tmp.filter((entry) => typeof entry.displayName === 'string').sort((a, b) => b.displayName.localeCompare(a.displayName));
+    tmp = tmp
+      .filter((entry) => typeof entry.displayName === 'string')
+      .sort((a, b) => b.displayName.localeCompare(a.displayName));
     console.log('Filtering from Z to A', tmp);
     setEntryArray(tmp);
   };
@@ -137,7 +149,9 @@ const Library: FC<libraryProps> = () => {
         <div className={styles.headerText}>Your library</div>
         <div className={styles.searchBarWrapper}>
           <input
-            className={`${styles.searchBarInput} ${showSearchBar ? styles.searchBarActive : ''}`}
+            className={`${styles.searchBarInput} ${
+              showSearchBar ? styles.searchBarActive : ''
+            }`}
             id='searchBar'
             type='text'
             onChange={(event) => {
@@ -160,27 +174,51 @@ const Library: FC<libraryProps> = () => {
               }
               setShowSearchBar(!showSearchBar);
             }}>
-            <Image src={searchIcon} alt={'SearchIcon'} className={`${styles.searchBarIcon} ${searchBarFocus ? styles.searchBarIconFocus : ''}`} />
+            <Image
+              src={searchIcon}
+              alt={'SearchIcon'}
+              className={`${styles.searchBarIcon} ${
+                searchBarFocus ? styles.searchBarIconFocus : ''
+              }`}
+            />
           </div>
         </div>
+
         <div className={styles.headerIconWrapper}>
           <div
             className={styles.iconWrapper}
             onClick={() => {
               filterAtoZ();
             }}>
-            <Image priority src={filterAZ} alt='Filter from A to Z' className={styles.headerIcon} />
+            <Image
+              priority
+              src={filterAZ}
+              alt='Filter from A to Z'
+              className={styles.headerIcon}
+            />
           </div>
           <div
             className={styles.iconWrapper}
             onClick={() => {
               filterZtoA();
             }}>
-            <Image priority src={filterZA} alt='Filter from Z to A' className={styles.headerIcon} />
+            <Image
+              priority
+              src={filterZA}
+              alt='Filter from Z to A'
+              className={styles.headerIcon}
+            />
           </div>
         </div>
       </div>
       <div className={styles.contentWrapper}>
+        {isLoading ? (
+          <div className={styles.loaderContainer}>
+            <span className={styles.loader}></span>
+          </div>
+        ) : (
+          <></>
+        )}
         {entryArray.length >= 1 ? (
           entryArray.map((entry, i) => {
             if (!entry.shown) {
